@@ -13,19 +13,24 @@ Plug 'universal-ctags/ctags'
 Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
 call plug#end()
-"auto-complete on start
+
+"auto-complete
 let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+let g:deoplete#sources#clang#libclang_path = "/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1"
+let g:deoplete#sources#clang#clang_header ="/usr/include/clang"
 "auto-complete english dictionary
 "setlocal dictionary+=/usr/share/dict/american-english
+
 "NERTree
 map <F1> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 "Ale/linter
 let g:ale_sign_column_always = 1
-"color
+
+"colorschemes
 colorscheme elda
-nmap <F2> :TagbarToggle<CR>
-let g:deoplete#sources#clang#libclang_path = "/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1"
-let g:deoplete#sources#clang#clang_header ="/usr/include/clang"
-"map autocomplete to tab key
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+"Tagbar
+nmap <f2> :tagbartoggle<cr>
