@@ -12,25 +12,41 @@ Plug 'flazz/vim-colorschemes'
 Plug 'universal-ctags/ctags'
 Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
+Plug 'quabug/vim-gdscript'
 call plug#end()
+
+"disable Arrow keys in Escape mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" Disable Arrow keys in Insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 
 "auto-complete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-let g:deoplete#sources#clang#libclang_path = "/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1"
-let g:deoplete#sources#clang#clang_header ="/usr/include/clang"
+set completeopt-=preview
+let g:deoplete#sources#clang#libclang_path="/home/lain/.clang/build/lib/libclang.so"
+let g:deoplete#sources#clang#clang_header="/usr/lib/clang"
 "auto-complete english dictionary
 "setlocal dictionary+=/usr/share/dict/american-english
 
-"NERTree
+"NERDTree
 map <F1> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "Ale/linter
 let g:ale_sign_column_always = 1
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 "colorschemes
 colorscheme elda
 
 "Tagbar
-nmap <f2> :tagbartoggle<cr>
+nmap <F2> :TagbarToggle<CR>
