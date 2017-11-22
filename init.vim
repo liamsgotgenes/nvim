@@ -13,6 +13,9 @@ Plug 'universal-ctags/ctags'
 Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
 Plug 'quabug/vim-gdscript'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 "disable Arrow keys in Escape mode
@@ -31,8 +34,6 @@ imap <right> <nop>
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
-let g:deoplete#sources#clang#libclang_path="/home/lain/.clang/build/lib/libclang.so"
-let g:deoplete#sources#clang#clang_header="/usr/lib/clang"
 "auto-complete english dictionary
 "setlocal dictionary+=/usr/share/dict/american-english
 
@@ -50,3 +51,5 @@ colorscheme elda
 
 "Tagbar
 nmap <F2> :TagbarToggle<CR>
+
+let g:airline_theme='bubblegum'
