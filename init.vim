@@ -2,7 +2,6 @@ set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set number
 call plug#begin()
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-clang'
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neco-syntax'
 Plug 'artur-shaik/vim-javacomplete2'
@@ -16,7 +15,19 @@ Plug 'quabug/vim-gdscript'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'Valloric/MatchTagAlways'
+Plug 'alvan/vim-closetag'
 call plug#end()
+
+
+"remap tabswitch
+nmap <C-j> :tabprevious<CR>
+nmap <C-k> :tabnext<CR>
+imap <C-j> <Esc> :tabprevious<CR>
+imap <C-k> <Esc> :tabnext<CR>
+
+"remap opening a new tab in normal mode
+nmap <C-p> :tabnew<CR>
 
 "disable Arrow keys in Escape mode
 map <up> <nop>
@@ -43,8 +54,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 "Ale/linter
 let g:ale_sign_column_always = 1
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-m> <Plug>(ale_previous_wrap)
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
 "colorschemes
 colorscheme elda
@@ -52,4 +63,8 @@ colorscheme elda
 "Tagbar
 nmap <F2> :TagbarToggle<CR>
 
+"airline theme
 let g:airline_theme='bubblegum'
+
+"html autoclose tags
+let g:closetag_filenames = '*.html, *.xml, *.xhtml'
