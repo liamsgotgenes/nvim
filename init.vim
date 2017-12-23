@@ -17,8 +17,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'Valloric/MatchTagAlways'
 Plug 'alvan/vim-closetag'
+Plug 'dracula/vim'
 call plug#end()
-
 
 "remap tabswitch
 nmap <C-j> :tabprevious<CR>
@@ -58,7 +58,7 @@ nmap <silent> <C-m> <Plug>(ale_previous_wrap)
 nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
 "colorschemes
-colorscheme elda
+"colorscheme elda
 
 "Tagbar
 nmap <F2> :TagbarToggle<CR>
@@ -68,3 +68,19 @@ let g:airline_theme='bubblegum'
 
 "html autoclose tags
 let g:closetag_filenames = '*.html, *.xml, *.xhtml'
+
+syntax on
+color dracula
+
+"terminal keymaps
+tnoremap <C-w> <c-\><C-n><C-w>
+let g:ale_java_javac_classpath = "/media/lain/SHARE/JavaWorkspace/ScpGUI/src/edu/ilstu/"
+
+nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+
+"javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+"syncs the ale java path with javacomplete2's path
+:command Path let g:ale_java_javac_classpath = javacomplete#server#GetClassPath()
