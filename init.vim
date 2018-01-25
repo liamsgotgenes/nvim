@@ -18,6 +18,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Valloric/MatchTagAlways'
 Plug 'alvan/vim-closetag'
 Plug 'dracula/vim'
+Plug 'zchee/deoplete-clang'
 call plug#end()
 
 "remap tabswitch
@@ -45,6 +46,9 @@ imap <right> <nop>
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
+let g:deoplete#sources#clang#libclang_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
+let g:deoplete#sources#clang#clang_header='/usr/lib/clang/'
+
 "auto-complete english dictionary
 "setlocal dictionary+=/usr/share/dict/american-english
 
