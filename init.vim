@@ -21,6 +21,17 @@ Plug 'dracula/vim'
 Plug 'Rip-Rip/clang_complete'
 call plug#end()
 
+let file_extension=expand('%:e')
+if file_extension=="java"
+    nmap <F9> :!javac *java<CR>
+endif
+if file_extension=="cpp"||file_extension=="h"
+    nmap <F9> :!g++ *cpp && ./a.out<CR>
+endif
+if file_extension=="py"
+    nmap <F9> :!python *py<CR>
+endif
+
 "remap tabswitch
 nmap <C-j> :tabprevious<CR>
 nmap <C-k> :tabnext<CR>
@@ -46,8 +57,6 @@ imap <right> <nop>
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
-"let g:deoplete#sources#clang#libclang_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
-"let g:deoplete#sources#clang#clang_header='/usr/lib/clang/'
 let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
 
 "auto-complete english dictionary
