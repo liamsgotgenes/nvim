@@ -57,7 +57,7 @@ imap <right> <nop>
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
-let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
+let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.9.so.1'
 
 "auto-complete english dictionary
 "setlocal dictionary+=/usr/share/dict/american-english
@@ -98,3 +98,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "syncs the ale java path with javacomplete2's path
 :command Path let g:ale_java_javac_classpath = javacomplete#server#GetClassPath()
+
+"fixes autopair bug with clang_complete
+let g:AutoPairsMapCR = 0
+imap <silent><CR> <CR><Plug>AutoPairsReturn<Paste>
