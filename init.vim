@@ -23,13 +23,13 @@ call plug#end()
 
 let file_extension=expand('%:e')
 if file_extension=="java"
-    nmap <F9> :!javac *java<CR>
+    nmap <F10> :!javac *java && java main<CR>
 endif
 if file_extension=="cpp"||file_extension=="h"
-    nmap <F9> :!g++ *cpp && ./a.out<CR>
+    nmap <F10> :!make && ./a.out<CR>
 endif
 if file_extension=="py"
-    nmap <F9> :!python *py<CR>
+    nmap <F10> :!python *py<CR>
 endif
 
 "remap tabswitch
@@ -57,7 +57,7 @@ imap <right> <nop>
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
-let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.9.so.1'
+let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
 
 "auto-complete english dictionary
 "setlocal dictionary+=/usr/share/dict/american-english
@@ -101,4 +101,4 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "fixes autopair bug with clang_complete
 let g:AutoPairsMapCR = 0
-imap <silent><CR> <CR><Plug>AutoPairsReturn<Paste>
+imap <silent><CR> <CR><Plug>AutoPairsReturn
