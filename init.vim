@@ -19,9 +19,11 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'alvan/vim-closetag'
 Plug 'dracula/vim'
 Plug 'Rip-Rip/clang_complete'
+Plug 'enricobacis/vim-airline-clock'
 call plug#end()
 
 let file_extension=expand('%:e')
+let file_name=expand('%t')
 if file_extension=="java"
     nmap <F10> :!javac *java && java main<CR>
 endif
@@ -30,6 +32,9 @@ if file_extension=="cpp"||file_extension=="h"
 endif
 if file_extension=="py"
     nmap <F10> :!python *py<CR>
+endif
+if file_extension=="c"
+    nmap <F10> :!gcc *c && ./a.out<CR>
 endif
 
 "remap tabswitch
@@ -102,3 +107,6 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 "fixes autopair bug with clang_complete
 let g:AutoPairsMapCR = 0
 imap <silent><CR> <CR><Plug>AutoPairsReturn
+
+"clock update time
+let g:airline#extensions#clock#updatetime = 1000
