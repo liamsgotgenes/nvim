@@ -108,5 +108,6 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 let g:AutoPairsMapCR = 0
 imap <silent><CR> <CR><Plug>AutoPairsReturn
 
-"clock update time
-let g:airline#extensions#clock#updatetime = 1000
+"clock update time and format
+let g:airline#extensions#clock#updatetime = 999
+let g:airline#extensions#clock#format = "%I:%M%p"
