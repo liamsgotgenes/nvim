@@ -20,6 +20,7 @@ Plug 'alvan/vim-closetag'
 Plug 'dracula/vim'
 Plug 'Rip-Rip/clang_complete'
 Plug 'enricobacis/vim-airline-clock'
+Plug 'zchee/deoplete-jedi'
 call plug#end()
 
 let file_extension=expand('%:e')
@@ -63,6 +64,7 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
 let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
+let g:deoplete#max_list=15
 
 "auto-complete english dictionary
 "setlocal dictionary+=/usr/share/dict/american-english
