@@ -11,7 +11,6 @@ Plug 'flazz/vim-colorschemes'
 Plug 'universal-ctags/ctags'
 Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
-Plug 'quabug/vim-gdscript'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
@@ -21,6 +20,8 @@ Plug 'dracula/vim'
 Plug 'Rip-Rip/clang_complete'
 Plug 'enricobacis/vim-airline-clock'
 Plug 'zchee/deoplete-jedi'
+Plug 'pedrosans/vim-notes'
+Plug 'pedrosans/vim-misc'
 call plug#end()
 
 let file_extension=expand('%:e')
@@ -46,7 +47,6 @@ imap <C-k> <Esc> :tabnext<CR>
 
 "remap opening a new tab in normal mode
 nmap <C-p> :tabnew<CR>
-
 "disable Arrow keys in Escape mode
 map <up> <nop>
 map <down> <nop>
@@ -60,14 +60,19 @@ imap <left> <nop>
 imap <right> <nop>
 
 "auto-complete
-let g:deoplete#enable_at_startup = 1
+if hostname()=="lappy"
+    let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
+    let g:deoplete#enable_at_startup=0
+    let g:deoplete#max_list=10
+    imap <C-Space> <nop>
+    nmap <C-Space> :call deoplete#toggle()<CR>
+    imap <C-Space> <C-o>:call deoplete#toggle()<CR>
+elseif hostname()=="navi"
+    let g:deoplete#enable_at_startup = 1
+    let g:deoplete#max_list=20
+endif
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
-let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
-let g:deoplete#max_list=15
-
-"auto-complete english dictionary
-"setlocal dictionary+=/usr/share/dict/american-english
 
 "NERDTree
 map <F1> :NERDTreeToggle<CR>
@@ -113,3 +118,8 @@ imap <silent><CR> <CR><Plug>AutoPairsReturn
 "clock update time and format
 let g:airline#extensions#clock#updatetime = 999
 let g:airline#extensions#clock#format = "%I:%M%p"
+
+filetype plugin on
+let g:notes_suffix='.txt'
+let g:notes_tab_indents = 1
+let g:notes_directories=['~/Notes']
