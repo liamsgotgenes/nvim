@@ -100,7 +100,6 @@ color dracula
 
 "terminal keymaps
 tnoremap <C-w> <c-\><C-n><C-w>
-let g:ale_java_javac_classpath = "/media/lain/SHARE/JavaWorkspace/ScpGUI/src/edu/ilstu/"
 
 nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
@@ -119,6 +118,7 @@ imap <silent><CR> <CR><Plug>AutoPairsReturn
 let g:airline#extensions#clock#updatetime = 999
 let g:airline#extensions#clock#format = "%I:%M%p"
 
+"vim-notes
 filetype plugin on
 let g:notes_suffix='.txt'
 let g:notes_tab_indents = 1
