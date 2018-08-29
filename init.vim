@@ -27,6 +27,8 @@ call plug#end()
 let file_extension=expand('%:e')
 let file_name=expand('%t')
 if file_extension=="java"
+    nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+    imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
     nmap <F10> :!javac *java && java main<CR>
 endif
 if file_extension=="cpp"||file_extension=="h"
@@ -37,6 +39,9 @@ if file_extension=="py"
 endif
 if file_extension=="c"
     nmap <F10> :!gcc *c && ./a.out<CR>
+endif
+if file_extension=="txt"
+    setlocal dictionary+=/usr/share/dict/american-english
 endif
 
 "remap tabswitch
@@ -60,17 +65,12 @@ imap <left> <nop>
 imap <right> <nop>
 
 "auto-complete
-if hostname()=="lappy"
-    let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
-    let g:deoplete#enable_at_startup=0
-    let g:deoplete#max_list=10
-    imap <C-Space> <nop>
-    nmap <C-Space> :call deoplete#toggle()<CR>
-    imap <C-Space> <C-o>:call deoplete#toggle()<CR>
-elseif hostname()=="navi"
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#max_list=20
-endif
+let g:deoplete#enable_at_startup = 1
+nmap <C-Space> :call deoplete#toggle()<CR>
+imap <C-Space> <C-o>:call deoplete#toggle()<CR>
+let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
+let g:deoplete#max_list=10
+
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
 
@@ -82,9 +82,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:ale_sign_column_always = 1
 nmap <silent> <C-m> <Plug>(ale_previous_wrap)
 nmap <silent> <C-n> <Plug>(ale_next_wrap)
-
-"colorschemes
-"colorscheme elda
 
 "Tagbar
 nmap <F2> :TagbarToggle<CR>
@@ -100,9 +97,6 @@ color dracula
 
 "terminal keymaps
 tnoremap <C-w> <c-\><C-n><C-w>
-
-nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
 
 "javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
@@ -122,4 +116,6 @@ let g:airline#extensions#clock#format = "%I:%M%p"
 filetype plugin on
 let g:notes_suffix='.txt'
 let g:notes_tab_indents = 1
-let g:notes_directories=['~/Notes']
+let g:notes_directories=['~/School/ART179']
+
+let g:airline_powerline_fonts = 1
