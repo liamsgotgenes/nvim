@@ -116,6 +116,5 @@ let g:airline#extensions#clock#format = "%I:%M%p"
 filetype plugin on
 let g:notes_suffix='.txt'
 let g:notes_tab_indents = 1
-let g:notes_directories=['~/School/ART179']
 
 let g:airline_powerline_fonts = 1
