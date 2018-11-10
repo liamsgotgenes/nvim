@@ -45,10 +45,8 @@ if file_extension=="txt"
 endif
 
 "remap tabswitch
-nmap <C-j> :tabprevious<CR>
-nmap <C-k> :tabnext<CR>
-imap <C-j> <Esc> :tabprevious<CR>
-imap <C-k> <Esc> :tabnext<CR>
+nmap <C-h> :tabprevious<CR>
+nmap <C-l> :tabnext<CR>
 
 "remap opening a new tab in normal mode
 nmap <C-p> :tabnew<CR>
