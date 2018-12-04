@@ -1,3 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/home/lain/School/6th Semester/IT 356/Projects/Res4'
+let g:netrw_dirhist_2='/home/lain/Documents/linearRegression/.git'
+let g:netrw_dirhist_3='/home/lain/linearRegression/linearregression'
+let g:netrw_dirhist_4='/home/lain/.config/nvim'

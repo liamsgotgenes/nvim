@@ -22,6 +22,8 @@ Plug 'enricobacis/vim-airline-clock'
 Plug 'zchee/deoplete-jedi'
 Plug 'pedrosans/vim-notes'
 Plug 'pedrosans/vim-misc'
+Plug 'rhysd/vim-clang-format'
+Plug 'justinmk/vim-syntax-extra'
 call plug#end()
 
 let file_extension=expand('%:e')
@@ -38,7 +40,7 @@ if file_extension=="py"
     nmap <F10> :!python *py<CR>
 endif
 if file_extension=="c"
-    nmap <F10> :!gcc *c && ./a.out<CR>
+    nmap <F10> :!make && ./a.out<CR>
 endif
 if file_extension=="txt"
     setlocal dictionary+=/usr/share/dict/american-english
