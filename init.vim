@@ -24,7 +24,43 @@ Plug 'pedrosans/vim-notes'
 Plug 'pedrosans/vim-misc'
 Plug 'rhysd/vim-clang-format'
 Plug 'justinmk/vim-syntax-extra'
+Plug 'dylanaraps/wal.vim'
 call plug#end()
+
+"theme changer
+let g:theme_index=1
+let g:number_of_themes=3
+function Change_theme (arg)
+    if a:arg=="l"
+        let g:theme_index=g:theme_index+1
+        if g:theme_index==g:number_of_themes
+            let g:theme_index=0
+        endif
+    else
+        let g:theme_index=g:theme_index-1
+        if g:theme_index==-1
+            let g:theme_index=g:number_of_themes-1
+        endif
+    endif
+
+    if g:theme_index==0
+        let g:airline_theme='jet'
+        color eva
+    endif
+    if g:theme_index==1
+        "needs to redraw and call color twice in order to change cursor color,
+        "idk why but it #justworks
+        let g:airline_theme="dracula"
+        color dracula
+        redraw
+        color dracula
+        redraw
+    endif
+    if g:theme_index==2
+        let g:airline_theme='wal'
+        color wal
+    endif
+endfunction
 
 let file_extension=expand('%:e')
 let file_name=expand('%t')
@@ -40,7 +76,7 @@ if file_extension=="py"
     nmap <F10> :!python *py<CR>
 endif
 if file_extension=="c"
-    nmap <F10> :!make && ./a.out<CR>
+    nmap <F10> :!make<CR>
 endif
 if file_extension=="txt"
     setlocal dictionary+=/usr/share/dict/american-english
@@ -52,6 +88,7 @@ nmap <C-l> :tabnext<CR>
 
 "remap opening a new tab in normal mode
 nmap <C-p> :tabnew<CR>
+
 "disable Arrow keys in Escape mode
 map <up> <nop>
 map <down> <nop>
@@ -63,6 +100,10 @@ imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
+
+"map arrow keys for theme changer function
+nmap <left> :call Change_theme("l")<CR>
+nmap <right> :call Change_theme("r")<CR>
 
 "auto-complete
 let g:deoplete#enable_at_startup = 1
@@ -87,13 +128,14 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 nmap <F2> :TagbarToggle<CR>
 
 "airline theme
-let g:airline_theme='bubblegum'
+"let g:airline_theme='jet'
 
 "html autoclose tags
 let g:closetag_filenames = '*.html, *.xml, *.xhtml'
 
 syntax on
-color dracula
+"color dracula
+"color eva
 
 "terminal keymaps
 tnoremap <C-w> <c-\><C-n><C-w>
@@ -105,7 +147,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 :command Path let g:ale_java_javac_classpath = javacomplete#server#GetClassPath()
 
 "fixes autopair bug with clang_complete
-let g:AutoPairsMapCR = 0
+let g:AutoPairsMapCR = 1
 imap <silent><CR> <CR><Plug>AutoPairsReturn
 
 "clock update time and format
@@ -118,3 +160,4 @@ let g:notes_suffix='.txt'
 let g:notes_tab_indents = 1
 
 let g:airline_powerline_fonts = 1
+call Change_theme("l")
