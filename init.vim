@@ -25,6 +25,7 @@ Plug 'pedrosans/vim-misc'
 Plug 'rhysd/vim-clang-format'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'dylanaraps/wal.vim'
+Plug 'haya14busa/incsearch.vim'
 call plug#end()
 
 "theme changer
@@ -147,7 +148,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 :command Path let g:ale_java_javac_classpath = javacomplete#server#GetClassPath()
 
 "fixes autopair bug with clang_complete
-let g:AutoPairsMapCR = 1
+let g:AutoPairsMapCR = 0
 imap <silent><CR> <CR><Plug>AutoPairsReturn
 
 "clock update time and format
