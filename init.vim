@@ -25,10 +25,12 @@ Plug 'pedrosans/vim-misc'
 Plug 'rhysd/vim-clang-format'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'dylanaraps/wal.vim'
-Plug 'haya14busa/incsearch.vim'
+Plug 'romainl/vim-cool'
+Plug 'NLKNguyen/copy-cut-paste.vim'
 call plug#end()
+let g:CoolTotalMatches = 1
 
-"theme changer
+
 let g:theme_index=1
 let g:number_of_themes=3
 function Change_theme (arg)
@@ -45,10 +47,6 @@ function Change_theme (arg)
     endif
 
     if g:theme_index==0
-        let g:airline_theme='jet'
-        color eva
-    endif
-    if g:theme_index==1
         "needs to redraw and call color twice in order to change cursor color,
         "idk why but it #justworks
         let g:airline_theme="dracula"
@@ -56,6 +54,10 @@ function Change_theme (arg)
         redraw
         color dracula
         redraw
+    endif
+    if g:theme_index==1
+        let g:airline_theme='jet'
+        color eva
     endif
     if g:theme_index==2
         let g:airline_theme='wal'
@@ -161,4 +163,8 @@ let g:notes_suffix='.txt'
 let g:notes_tab_indents = 1
 
 let g:airline_powerline_fonts = 1
-call Change_theme("l")
+call Change_theme("r")
+
+"copy from vim simplified
+let g:copy_cut_paste_no_mappings = 1
+vmap <C-c> <Plug>CCP_CopyText
