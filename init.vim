@@ -27,6 +27,7 @@ Plug 'justinmk/vim-syntax-extra'
 Plug 'dylanaraps/wal.vim'
 Plug 'romainl/vim-cool'
 Plug 'NLKNguyen/copy-cut-paste.vim'
+Plug 'tpope/vim-surround'
 call plug#end()
 let g:CoolTotalMatches = 1
 
@@ -168,3 +169,6 @@ call Change_theme("r")
 "copy from vim simplified
 let g:copy_cut_paste_no_mappings = 1
 vmap <C-c> <Plug>CCP_CopyText
+
+"Vim surround shortcuts
+
