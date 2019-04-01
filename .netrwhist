@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/lain/Melchior/School/8th Semester/IT391/Lab1_pt2'
-let g:netrw_dirhist_2='/home/lain/Melchior/School/8th Semester/IT391/Lab1_pt2/6'
-let g:netrw_dirhist_3='/home/lain/Melchior/C/program1part1'
