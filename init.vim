@@ -1,5 +1,6 @@
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set number
+set cursorline
 call plug#begin()
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neco-vim'
@@ -28,8 +29,12 @@ Plug 'dylanaraps/wal.vim'
 Plug 'romainl/vim-cool'
 Plug 'NLKNguyen/copy-cut-paste.vim'
 Plug 'tpope/vim-surround'
+Plug 'Yggdroot/indentLine'
 call plug#end()
+
+let g:indentLine_conceallevel = 2
 let g:CoolTotalMatches = 1
+
 
 
 let g:theme_index=1
@@ -55,14 +60,18 @@ function Change_theme (arg)
         redraw
         color dracula
         redraw
+        set cursorline
     endif
     if g:theme_index==1
         let g:airline_theme='jet'
         color eva
+        set cursorline
+        highlight cursorline ctermbg=233
     endif
     if g:theme_index==2
         let g:airline_theme='wal'
         color wal
+        set cursorline!
     endif
 endfunction
 
@@ -80,9 +89,12 @@ if file_extension=="py"
     nmap <F10> :!python *py<CR>
 endif
 if file_extension=="c"
-    nmap <F10> :!make<CR>
+    nmap <F10> :!make && ./a.out<CR>
 endif
 if file_extension=="txt"
+    setlocal dictionary+=/usr/share/dict/american-english
+endif
+if file_name=="README"
     setlocal dictionary+=/usr/share/dict/american-english
 endif
 
@@ -152,7 +164,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "fixes autopair bug with clang_complete
 let g:AutoPairsMapCR = 0
-imap <silent><CR> <CR><Plug>AutoPairsReturn
+"imap <silent><CR> <CR><Plug>AutoPairsReturn
 
 "clock update time and format
 let g:airline#extensions#clock#updatetime = 999
@@ -172,3 +184,17 @@ vmap <C-c> <Plug>CCP_CopyText
 
 "Vim surround shortcuts
 
+
+"C/{} auto complete and indent
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+
+"disable comment continuation
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+set foldmethod=manual

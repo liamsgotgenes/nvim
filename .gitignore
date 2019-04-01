@@ -1,3 +1,4 @@
 plugged/*
 sessions/*
 cscope.vim
+.netrwhist
