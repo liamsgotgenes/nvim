@@ -1,6 +1,3 @@
-set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
-set number
-set cursorline
 call plug#begin()
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neco-vim'
@@ -32,10 +29,12 @@ Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
 call plug#end()
 
+set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
+set number
+set cursorline
+
 let g:indentLine_conceallevel = 2
 let g:CoolTotalMatches = 1
-
-
 
 let g:theme_index=1
 let g:number_of_themes=3
@@ -182,9 +181,6 @@ call Change_theme("r")
 let g:copy_cut_paste_no_mappings = 1
 vmap <C-c> <Plug>CCP_CopyText
 
-"Vim surround shortcuts
-
-
 "C/{} auto complete and indent
 inoremap " ""<left>
 inoremap ' ''<left>
@@ -197,4 +193,5 @@ inoremap {;<CR> {<CR>};<ESC>O
 "disable comment continuation
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+"fold to manual
 set foldmethod=manual
