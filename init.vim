@@ -3,7 +3,6 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neco-syntax'
 Plug 'artur-shaik/vim-javacomplete2'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'w0rp/ale'
 Plug 'flazz/vim-colorschemes'
 Plug 'universal-ctags/ctags'
@@ -16,7 +15,6 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'alvan/vim-closetag'
 Plug 'dracula/vim'
 Plug 'Rip-Rip/clang_complete'
-Plug 'enricobacis/vim-airline-clock'
 Plug 'zchee/deoplete-jedi'
 Plug 'pedrosans/vim-notes'
 Plug 'pedrosans/vim-misc'
@@ -27,6 +25,9 @@ Plug 'romainl/vim-cool'
 Plug 'NLKNguyen/copy-cut-paste.vim'
 Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
+Plug 'numirias/semshi'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
@@ -36,7 +37,7 @@ set cursorline
 let g:indentLine_conceallevel = 2
 let g:CoolTotalMatches = 1
 
-let g:theme_index=1
+let g:theme_index=2
 let g:number_of_themes=3
 function Change_theme (arg)
     if a:arg=="l"
@@ -74,6 +75,7 @@ function Change_theme (arg)
     endif
 endfunction
 
+
 let file_extension=expand('%:e')
 let file_name=expand('%t')
 if file_extension=="java"
@@ -88,7 +90,7 @@ if file_extension=="py"
     nmap <F10> :!python *py<CR>
 endif
 if file_extension=="c"
-    nmap <F10> :!make && ./a.out<CR>
+    nmap <F10> :!make<CR>
 endif
 if file_extension=="txt"
     setlocal dictionary+=/usr/share/dict/american-english
@@ -126,13 +128,8 @@ nmap <C-Space> :call deoplete#toggle()<CR>
 imap <C-Space> <C-o>:call deoplete#toggle()<CR>
 let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
 let g:deoplete#max_list=10
-
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 set completeopt-=preview
-
-"NERDTree
-map <F1> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "Ale/linter
 let g:ale_sign_column_always = 1
@@ -142,15 +139,10 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 "Tagbar
 nmap <F2> :TagbarToggle<CR>
 
-"airline theme
-"let g:airline_theme='jet'
-
 "html autoclose tags
 let g:closetag_filenames = '*.html, *.xml, *.xhtml'
 
 syntax on
-"color dracula
-"color eva
 
 "terminal keymaps
 tnoremap <C-w> <c-\><C-n><C-w>
@@ -163,17 +155,13 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "fixes autopair bug with clang_complete
 let g:AutoPairsMapCR = 0
-"imap <silent><CR> <CR><Plug>AutoPairsReturn
-
-"clock update time and format
-let g:airline#extensions#clock#updatetime = 999
-let g:airline#extensions#clock#format = "%I:%M%p"
 
 "vim-notes
 filetype plugin on
 let g:notes_suffix='.txt'
 let g:notes_tab_indents = 1
 
+"powerline
 let g:airline_powerline_fonts = 1
 call Change_theme("r")
 
@@ -195,3 +183,45 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 "fold to manual
 set foldmethod=manual
+nnoremap zz zfa}
+
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
+nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
+nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
+nnoremap <silent> <C-w>\ :TmuxNavigatePrevious<cr>
+
+"fle browser settings
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 15
+
+"function that iterates over every buffer and closes any that are a file browser; opens a file browser if none is already open
+function File_Browser()
+    let list = filter(range(1, bufnr('$')), 'bufexists(v:val)')
+    let found = 0
+    for item in list
+        let file_type = getbufvar(item, '&filetype')
+   		if file_type ==# "netrw"
+            let found = 1
+			exec ':bd' . item
+		endif
+    endfor
+    if found == 0
+        Vexplore
+        set winfixwidth
+    endif
+endfunction
+
+"function to remap F1 from help to File_Browser for netrw file browser windows
+function! Netrw_map()
+    noremap <buffer> <F1> :call File_Browser()<CR>
+endfunction
+
+"calls Netrw_map on open of netrw buffer
+augroup Netrw_map_augroup
+    autocmd!
+    autocmd filetype netrw call Netrw_map()
+augroup END
+noremap <F1> :call File_Browser()<CR>
