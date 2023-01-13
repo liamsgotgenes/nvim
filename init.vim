@@ -1,110 +1,52 @@
+"  ███▄    █ ██▒   █▓ ██▓ ███▄ ▄███▓
+"  ██ ▀█   █▓██░   █▒▓██▒▓██▒▀█▀ ██▒
+" ▓██  ▀█ ██▒▓██  █▒░▒██▒▓██    ▓██░
+" ▓██▒  ▐▌██▒ ▒██ █░░░██░▒██    ▒██ 
+" ▒██░   ▓██░  ▒▀█░  ░██░▒██▒   ░██▒
+" ░ ▒░   ▒ ▒   ░ ▐░  ░▓  ░ ▒░   ░  ░
+" ░ ░░   ░ ▒░  ░ ░░   ▒ ░░  ░      ░
+"    ░   ░ ░     ░░   ▒ ░░      ░   
+"          ░      ░   ░         ░   
+"                ░                  
 call plug#begin()
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neco-vim'
-Plug 'Shougo/neco-syntax'
-Plug 'artur-shaik/vim-javacomplete2'
-Plug 'w0rp/ale'
 Plug 'flazz/vim-colorschemes'
-Plug 'universal-ctags/ctags'
-Plug 'majutsushi/tagbar'
 Plug 'jiangmiao/auto-pairs'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
 Plug 'Valloric/MatchTagAlways'
 Plug 'alvan/vim-closetag'
-Plug 'dracula/vim'
-Plug 'Rip-Rip/clang_complete'
-Plug 'zchee/deoplete-jedi'
-Plug 'pedrosans/vim-notes'
 Plug 'pedrosans/vim-misc'
 Plug 'rhysd/vim-clang-format'
-Plug 'justinmk/vim-syntax-extra'
-Plug 'dylanaraps/wal.vim'
 Plug 'romainl/vim-cool'
 Plug 'NLKNguyen/copy-cut-paste.vim'
-Plug 'tpope/vim-surround'
 Plug 'Yggdroot/indentLine'
 Plug 'numirias/semshi'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'vim-scripts/cSyntaxAfter'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'voldikss/vim-floaterm'
+Plug 'justinmk/vim-syntax-extra'
+Plug 'majutsushi/tagbar'
+Plug 'preservim/nerdtree'
+Plug 'aserebryakov/vim-todo-lists'
+Plug 'xolox/vim-colorscheme-switcher'
+Plug 'tpope/vim-surround'
+Plug 'turbio/bracey.vim'
 call plug#end()
 
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set number
-set cursorline
 
 let g:indentLine_conceallevel = 2
 let g:CoolTotalMatches = 1
 
-let g:theme_index=2
-let g:number_of_themes=3
-function Change_theme (arg)
-    if a:arg=="l"
-        let g:theme_index=g:theme_index+1
-        if g:theme_index==g:number_of_themes
-            let g:theme_index=0
-        endif
-    else
-        let g:theme_index=g:theme_index-1
-        if g:theme_index==-1
-            let g:theme_index=g:number_of_themes-1
-        endif
-    endif
 
-    if g:theme_index==0
-        "needs to redraw and call color twice in order to change cursor color,
-        "idk why but it #justworks
-        let g:airline_theme="dracula"
-        color dracula
-        redraw
-        color dracula
-        redraw
-        set cursorline
-    endif
-    if g:theme_index==1
-        let g:airline_theme='jet'
-        color eva
-        set cursorline
-        highlight cursorline ctermbg=233
-    endif
-    if g:theme_index==2
-        let g:airline_theme='wal'
-        color wal
-        set cursorline!
-    endif
-endfunction
+"colorscheme eva01
+hi Normal ctermbg=None 
+let g:airline_theme='base16'
 
-
-let file_extension=expand('%:e')
-let file_name=expand('%t')
-if file_extension=="java"
-    nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-    imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
-    nmap <F10> :!javac *java && java main<CR>
-endif
-if file_extension=="cpp"||file_extension=="h"
-    nmap <F10> :!make && ./a.out<CR>
-endif
-if file_extension=="py"
-    nmap <F10> :!python *py<CR>
-endif
-if file_extension=="c"
-    nmap <F10> :!make<CR>
-endif
-if file_extension=="txt"
-    setlocal dictionary+=/usr/share/dict/american-english
-endif
-if file_name=="README"
-    setlocal dictionary+=/usr/share/dict/american-english
-endif
-
-"remap tabswitch
-nmap <C-h> :tabprevious<CR>
-nmap <C-l> :tabnext<CR>
-
-"remap opening a new tab in normal mode
-nmap <C-p> :tabnew<CR>
+highlight clear SignColumn
 
 "disable Arrow keys in Escape mode
 map <up> <nop>
@@ -115,113 +57,143 @@ map <right> <nop>
 " Disable Arrow keys in Insert mode
 imap <up> <nop>
 imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
 
-"map arrow keys for theme changer function
-nmap <left> :call Change_theme("l")<CR>
-nmap <right> :call Change_theme("r")<CR>
-
-"auto-complete
-let g:deoplete#enable_at_startup = 1
-nmap <C-Space> :call deoplete#toggle()<CR>
-imap <C-Space> <C-o>:call deoplete#toggle()<CR>
-let g:clang_library_path='/usr/lib/x86_64-linux-gnu/libclang-3.8.so.1'
-let g:deoplete#max_list=10
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-set completeopt-=preview
-
-"Ale/linter
-let g:ale_sign_column_always = 1
-nmap <silent> <C-m> <Plug>(ale_previous_wrap)
-nmap <silent> <C-n> <Plug>(ale_next_wrap)
-
-"Tagbar
+nmap <F1> :NERDTreeToggle<CR>
 nmap <F2> :TagbarToggle<CR>
 
-"html autoclose tags
-let g:closetag_filenames = '*.html, *.xml, *.xhtml'
+" COC
+set hidden
 
-syntax on
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
 
-"terminal keymaps
-tnoremap <C-w> <c-\><C-n><C-w>
 
-"javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
 
-"syncs the ale java path with javacomplete2's path
-:command Path let g:ale_java_javac_classpath = javacomplete#server#GetClassPath()
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
 
-"fixes autopair bug with clang_complete
-let g:AutoPairsMapCR = 0
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
-"vim-notes
-filetype plugin on
-let g:notes_suffix='.txt'
-let g:notes_tab_indents = 1
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" : "\<Tab>"
+      "\ <SID>check_back_space() ? "\<Tab>" :
+      "\ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-"powerline
-let g:airline_powerline_fonts = 1
-call Change_theme("r")
-
-"copy from vim simplified
-let g:copy_cut_paste_no_mappings = 1
-vmap <C-c> <Plug>CCP_CopyText
-
-"C/{} auto complete and indent
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
-
-"disable comment continuation
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
-"fold to manual
-set foldmethod=manual
-nnoremap zz zfa}
-
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
-nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
-nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
-nnoremap <silent> <C-w>\ :TmuxNavigatePrevious<cr>
-
-"fle browser settings
-let g:netrw_banner = 0
-let g:netrw_browse_split = 4
-let g:netrw_winsize = 15
-
-"function that iterates over every buffer and closes any that are a file browser; opens a file browser if none is already open
-function File_Browser()
-    let list = filter(range(1, bufnr('$')), 'bufexists(v:val)')
-    let found = 0
-    for item in list
-        let file_type = getbufvar(item, '&filetype')
-   		if file_type ==# "netrw"
-            let found = 1
-			exec ':bd' . item
-		endif
-    endfor
-    if found == 0
-        Vexplore
-        set winfixwidth
-    endif
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
 endfunction
 
-"function to remap F1 from help to File_Browser for netrw file browser windows
-function! Netrw_map()
-    noremap <buffer> <F1> :call File_Browser()<CR>
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+map <F3> :!make<CR>
+imap <F3> <Esc> :!make<CR>
+
+function Java_Mappings()
+    noremap <F3> :CocCommand java.action.organizeImports<CR>
+    noremap <F4> :FloatermNew! ./gradlew bootRun<CR>
 endfunction
 
-"calls Netrw_map on open of netrw buffer
-augroup Netrw_map_augroup
-    autocmd!
-    autocmd filetype netrw call Netrw_map()
-augroup END
-noremap <F1> :call File_Browser()<CR>
+noremap "" "+y<CR>
+
+" =========================================================================================
+" Cozy floaterm
+" =========================================================================================
+" tnoremap <C-h> <C-\><C-n> :FloatermToggle<CR>
+" 
+" let g:big_term = 0
+" let g:vis_term = 0
+" 
+" function Hush()
+"     if g:vis_term == 1
+"         call feedkeys("\<C-\>")
+"         call feedkeys("\i")
+"     else
+"         normal :
+"         startinsert
+"     endif
+" endfunction
+" 
+" function Tog_Vis()
+"     FloatermToggle
+"     if g:vis_term == 0
+"         let g:vis_term = 1
+"     else
+"         let g:vis_term = 0
+"     endif
+"     call Hush()
+" endfunction
+" 
+" function Tog_Size()
+"     if g:vis_term == 0
+"         call Hush()
+"         return
+"     endif
+"     if g:big_term == 0
+"         FloatermUpdate --height=1.1 --width=1.0
+"         let g:big_term = 1
+"     else
+"         FloatermUpdate --height=0.6 --width=0.6
+"         let g:big_term = 0
+"     endif
+"     call Hush()
+" endfunction
+" 
+" "noremap <F3> <C-\><C-n>:call Tog_Size()<CR>
+" "tnoremap <F3> <C-\><C-n>:call Tog_Size()<CR>
+" 
+" "noremap <F4> :call Tog_Vis()<CR>
+" "tnoremap <F4> <C-\><C-n>:call Tog_Vis()<CR>
+" 
+" noremap <F4> :PrevColorScheme<CR>color<CR>
+" noremap <F5> :NextColorScheme<CR>color<CR>
+" 
+" let g:floaterm_wintitle = get(g:, 'floaterm_wintitle', "v:false")
+" let g:floaterm_autoclose = get(g:, 'floaterm_autoclose', '2')
+" "let g:floaterm_borderchars = get(g:, 'floaterm_borderchars', ['', '', '', '', '', '', '', ''])
+" 
+" function Cozy_Term()
+"     let g:vis_term = 1
+"     AirlineToggle
+"     set noshowmode
+"     set noruler
+"     set laststatus=0
+"     set noshowcmd
+"     set cmdheight=1
+"     set number!
+"     terminal rain
+"     IndentLinesDisable
+"     FloatermToggle
+"     call Hush()
+" endfunction
+
+
